@@ -1,0 +1,15 @@
+img {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+img :hover,
+img :focus,
+img :active {
+  cursor: pointer;
+}
+
+.portrait {
+  justify-content: center;
+  margin-bottom: -80px;
+}

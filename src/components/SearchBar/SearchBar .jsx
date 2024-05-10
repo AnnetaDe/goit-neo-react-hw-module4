@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import s from './SearchBar.module.css';
 
 export const SearchBar = ({ setSearchQuery }) => {
@@ -19,7 +19,7 @@ export const SearchBar = ({ setSearchQuery }) => {
             placeholder="Search images and photos"
             required="required"
           />
-          <ErrorMessage name="search" component="span" />
+          {/* <ErrorMessage name="search" component="span" /> */}
           <button type="submit">Search</button>
         </Form>
       </Formik>

@@ -1,4 +1,4 @@
-import { ImageGallery } from './components/ImgGallery/ImageGallery ';
+import { ImageGallery } from './components/ImageGallery/ImageGallery ';
 import { LoadMoreBtn } from './components/Button/LoadMoreBtn ';
 import { useEffect, useState } from 'react';
 import './App.css';
@@ -7,6 +7,7 @@ import { SearchBar } from './components/SearchBar/SearchBar ';
 import { fetchArticlesByQuery } from './servises/unsplashApi';
 import { Loader } from './components/Loader';
 import ModalWindow from './components/Modal/Modal';
+import { ErrorMessage } from './components/ErrorMessage/ErrorMessage';
 
 export const App = () => {
   const [imgData, setImgData] = useState([]);
@@ -14,7 +15,7 @@ export const App = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [message, setMessage] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(13);
+  const [perPage, setPerPage] = useState(15);
   const [searchQuery, setSearchQuery] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [showBtn, setShowBtn] = useState(false);
@@ -74,7 +75,7 @@ export const App = () => {
       {isEmpty && <p>Nothing was found</p>}
       {totalPages > currentPage && <LoadMoreBtn onClick={handleLoadMore} />}
       {totalPages === currentPage && <p>No more fun today!</p>}
-      {message && <p>Something went wrong</p>}
+      {message && <ErrorMessage />}
 
       <ModalWindow
         isOpen={modalIsOpen}

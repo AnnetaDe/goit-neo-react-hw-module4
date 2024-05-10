@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 const accsesKey = '1rnCtiCu4AS1eOzmxuvYJB3d827NfWqFc_VdIZRFoc8';
-const secretKey = 'X7eWc_JuF4ExeVhfNAYjdphbE0GxFgf0bKOaqlflbos';
-const applicationID = '599464';
-const UNSPLASH_ROOT = 'https://api.unsplash.com/search/photos';
-// const query = 'dog';
-const per_page = 13;
+// const secretKey = 'X7eWc_JuF4ExeVhfNAYjdphbE0GxFgf0bKOaqlflbos';
+// const applicationID = '599464';
+// const UNSPLASH_ROOT = 'https://api.unsplash.com/search/photos';
+// const per_page = 13;
 axios.defaults.baseURL = 'https://api.unsplash.com';
 
 export const fetchArticles = async configParam => {
@@ -19,8 +18,6 @@ export const fetchArticles = async configParam => {
   return data;
 };
 
-// fetchArticles();
-
 export const fetchArticlesByQuery = async configParam => {
   const { data } = await axios.get('search/photos', {
     params: {
@@ -32,5 +29,3 @@ export const fetchArticlesByQuery = async configParam => {
   });
   return data;
 };
-
-// fetchArticlesByQuery({ query: 'cat', page: 2 });
