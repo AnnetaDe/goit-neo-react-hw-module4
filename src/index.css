@@ -12,6 +12,7 @@
 ul,
 ol,
 p {
+  font-family: var(--font-family);
   margin-block: 0;
   padding-inline: 0;
   margin-inline: 0;
@@ -21,10 +22,13 @@ p {
 }
 
 button {
-  padding: 10px 30px;
-  border: 1px solid rgb(55, 36, 105);
+  font-family: var(--font-family);
+  font-size: 24px;
+  margin: 10px;
+  padding: 16px 36px;
+  border: 1px solid transparent;
   border-radius: var(--main-border-radius);
-  background-color: rgb(55, 36, 105);
+  background-color: #b6ba43;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s;
