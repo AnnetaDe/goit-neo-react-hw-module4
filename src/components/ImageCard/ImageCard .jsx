@@ -9,10 +9,11 @@ export const ImageCard = ({
   return (
     <div
       {...(width / height > 1
-        ? { className: s.landscape }
-        : { className: s.portrait })}
+        ? { className: s.landscapeDiv }
+        : { className: s.portraitDiv })}
     >
       <img
+        className={s.imageGallery}
         src={urls.small}
         alt={alt_description}
         onClick={() => onClick(urls.regular)}

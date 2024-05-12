@@ -8,19 +8,23 @@ import { fetchArticlesByQuery } from './servises/unsplashApi';
 import { Loader } from './components/Loader';
 import ModalWindow from './components/Modal/Modal';
 import { ErrorMessage } from './components/ErrorMessage/ErrorMessage';
+import { useToast } from 'react-toastify';
+// import type { ToastItem } from 'react-toastify';
 
 export const App = () => {
   const [imgData, setImgData] = useState([]);
+
+  const [searchQuery, setSearchQuery] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [message, setMessage] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(15);
-  const [searchQuery, setSearchQuery] = useState('');
   const [totalPages, setTotalPages] = useState(0);
   const [showBtn, setShowBtn] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalImg, setModalImg] = useState('');
+  const [error, setError] = useState(false);
+  const [chooseImg, setChooseImg] = useState(null);
 
   useEffect(() => {
     if (!searchQuery) {
@@ -28,31 +32,33 @@ export const App = () => {
     }
     const getImgData = async () => {
       try {
-        setMessage(false);
         setIsLoading(true);
         const imgDataAnswer = await fetchArticlesByQuery({
           query: searchQuery,
-          per_page: perPage,
+          per_page: 20,
           page: currentPage,
         });
+
         if (imgDataAnswer.results.length === 0) {
+          setIsEmpty(true);
           return;
         }
         setImgData(prevState => [...prevState, ...imgDataAnswer.results]);
         setTotalPages(imgDataAnswer.total_pages);
-        setShowBtn(currentPage < imgDataAnswer.total_pages);
       } catch (error) {
-        setMessage(true);
+        setError('something went wrong, try again');
       } finally {
         setIsLoading(false);
       }
+      // setShowBtn(currentPage < imgDataAnswer.total_pages);
     };
     getImgData();
-  }, [currentPage, searchQuery, perPage]);
+  }, [currentPage, searchQuery]);
 
   const handleSetQuery = query => {
     setSearchQuery(query);
     setImgData([]);
+    setCurrentPage(1);
   };
   const handleLoadMore = () => {
     setCurrentPage(prevState => prevState + 1);
@@ -70,18 +76,19 @@ export const App = () => {
   return (
     <div>
       <SearchBar setSearchQuery={handleSetQuery} />
+      {isEmpty && <p>Nothing was found</p>}
+      {totalPages === currentPage && <p>No more fun today!</p>}
+
       {<ImageGallery imgDataArray={imgData} click={openModal} />}
       {isLoading && <Loader />}
-      {isEmpty && <p>Nothing was found</p>}
       {totalPages > currentPage && <LoadMoreBtn onClick={handleLoadMore} />}
-      {totalPages === currentPage && <p>No more fun today!</p>}
-      {message && <ErrorMessage />}
 
       <ModalWindow
         isOpen={modalIsOpen}
         imageUrl={modalImg}
         closeModal={closeModal}
       />
+      {error && <ErrorMessage message={error} />}
     </div>
   );
 };

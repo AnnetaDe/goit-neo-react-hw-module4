@@ -1,15 +1,17 @@
-img {
+/* .landscapeDiv {
+  overflow: hidden;
   width: 100%;
-  height: auto;
-  overflow: visible;
+  aspect-ratio: 4/3;
 }
-img :hover,
-img :focus,
-img :active {
-  cursor: pointer;
-}
-
-.portrait {
-  justify-content: center;
-  margin-bottom: -80px;
+.portraitDiv {
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 3/4;
+} */
+.imageGallery {
+  width: 100%;
+  object-fit: cover;
+  padding: 0;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 }

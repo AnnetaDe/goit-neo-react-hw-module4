@@ -3,6 +3,13 @@ Modal.setAppElement('#root');
 import s from './Modal.module.css';
 
 const ModalWindow = ({ isOpen, imageUrl, closeModal }) => {
+  const handleKeyDown = e => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
+  document.addEventListener('keydown', handleKeyDown);
+
   return (
     <Modal
       className={s.modal}

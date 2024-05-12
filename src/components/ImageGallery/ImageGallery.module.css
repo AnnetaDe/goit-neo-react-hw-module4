@@ -1,17 +1,12 @@
 .gallery {
-  padding-left: 32px;
-  padding-right: 32px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 16px;
+  column-count: 6;
+  column-width: 280px;
 }
 .item {
-  position: relative;
-  cursor: pointer;
-}
-.gallery img {
-  overflow: visible;
-}
-.gallery .landscape {
-  grid-column: span 2;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  max-width: 400px;
+  width: 100%;
 }

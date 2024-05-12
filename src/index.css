@@ -8,6 +8,11 @@
   --main-bg-color-medium: #a5a3a3;
   --font-family: 'Montserrat', sans-serif;
   --font-sixe: 14px;
+  max-width: 1440px;
+  padding: 32px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 ul,
 ol,
