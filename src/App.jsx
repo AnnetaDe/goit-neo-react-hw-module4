@@ -8,23 +8,17 @@ import { fetchArticlesByQuery } from './servises/unsplashApi';
 import { Loader } from './components/Loader';
 import ModalWindow from './components/Modal/Modal';
 import { ErrorMessage } from './components/ErrorMessage/ErrorMessage';
-import { useToast } from 'react-toastify';
-// import type { ToastItem } from 'react-toastify';
 
 export const App = () => {
   const [imgData, setImgData] = useState([]);
-
   const [searchQuery, setSearchQuery] = useState('');
-
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [showBtn, setShowBtn] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalImg, setModalImg] = useState('');
   const [error, setError] = useState(false);
-  const [chooseImg, setChooseImg] = useState(null);
 
   useEffect(() => {
     if (!searchQuery) {
@@ -38,7 +32,6 @@ export const App = () => {
           per_page: 20,
           page: currentPage,
         });
-
         if (imgDataAnswer.results.length === 0) {
           setIsEmpty(true);
           return;
@@ -46,13 +39,13 @@ export const App = () => {
         setImgData(prevState => [...prevState, ...imgDataAnswer.results]);
         setTotalPages(imgDataAnswer.total_pages);
       } catch (error) {
-        setError('something went wrong, try again');
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
-      // setShowBtn(currentPage < imgDataAnswer.total_pages);
     };
-    getImgData();
+    // getImgData();
+    console.log(getImgData());
   }, [currentPage, searchQuery]);
 
   const handleSetQuery = query => {
@@ -66,18 +59,17 @@ export const App = () => {
 
   const openModal = imageUrl => {
     setIsOpen(true);
-    console.log('imageUrl', imageUrl);
     setModalImg(imageUrl);
   };
   const closeModal = () => {
     setIsOpen(false);
   };
-
+  console.log(error);
   return (
     <div>
+      {error === 'Network Error' && <ErrorMessage message={error} />}
       <SearchBar setSearchQuery={handleSetQuery} />
       {isEmpty && <p>Nothing was found</p>}
-      {totalPages === currentPage && <p>No more fun today!</p>}
 
       {<ImageGallery imgDataArray={imgData} click={openModal} />}
       {isLoading && <Loader />}
@@ -88,7 +80,8 @@ export const App = () => {
         imageUrl={modalImg}
         closeModal={closeModal}
       />
-      {error && <ErrorMessage message={error} />}
+
+      {totalPages === currentPage && <p>No more fun today!</p>}
     </div>
   );
 };

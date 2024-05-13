@@ -1,39 +1,51 @@
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import s from './SearchBar.module.css';
-import { toast } from 'react-toastify';
-import { FaIcons } from 'react-icons/fa';
-export const SearchBar = ({ setSearchQuery }) => {
-  const queryValue = query => {
-    if (!query.value.trim()) {
-      return toast.error('Enter the query', {
-        icon: FaIcons.FaExclamationCircle,
-      });
-    }
 
-    setSearchQuery(query);
+export const SearchBar = ({ setSearchQuery }) => {
+  const onSubmit = values => {
+    if (!values.search) {
+      return;
+    }
+    setSearchQuery(values.search);
   };
   return (
-    <div className={s.searchFormContainer}>
+    <header className={s.searchFormContainer}>
       <Formik
-        preventDefault
-        className={s.searchForm}
+        className={s.formikForm}
         initialValues={{ search: '' }}
-        onSubmit={values => {
-          setSearchQuery(values.search);
+        onSubmit={(values, { resetForm }) => {
+          onSubmit(values);
+          resetForm();
         }}
       >
-        <Form>
-          <Field
-            className={s.searchInput}
-            name="search"
-            type="text"
-            placeholder="Search images and photos"
-            required="required"
-          />
-          {/* <ErrorMessage name="search" component="span" /> */}
-          <button type="submit">Search</button>
+        <Form className={s.searchForm}>
+          <label className={s.searchLabel} htmlFor="search">
+            Image search
+          </label>
+          <div>
+            <Field
+              className={s.searchInput}
+              validate={value => {
+                if (!value) {
+                  return 'The search field is required';
+                }
+              }}
+              name="search"
+              id="search"
+              type="text"
+              placeholder="Search images and photos"
+            />
+            <ErrorMessage
+              className={s.searchError}
+              name="search"
+              component="span"
+            />
+          </div>
+          <button className="s.submitBtn" type="submit">
+            Search
+          </button>
         </Form>
       </Formik>
-    </div>
+    </header>
   );
 };
