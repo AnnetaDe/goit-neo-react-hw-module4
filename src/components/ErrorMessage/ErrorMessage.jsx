@@ -4,6 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import s from './ErrorMessage.module.css';
 
 export const ErrorMessage = ({ message }) => {
-  toast.error(message);
+  if (message) {
+    toast(message, { className: s.toast });
+  }
+
   return <ToastContainer />;
 };
