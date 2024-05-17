@@ -6,7 +6,7 @@ import './servises/unsplashApi';
 import { SearchBar } from './components/SearchBar/SearchBar ';
 import { fetchArticlesByQuery } from './servises/unsplashApi';
 import { Loader } from './components/Loader';
-import ModalWindow from './components/Modal/Modal';
+import ModalWindow from './components/ImageModal/ImageModal';
 import { ErrorMessage } from './components/ErrorMessage/ErrorMessage';
 
 export const App = () => {
@@ -44,8 +44,7 @@ export const App = () => {
         setIsLoading(false);
       }
     };
-    // getImgData();
-    console.log(getImgData());
+    getImgData();
   }, [currentPage, searchQuery]);
 
   const handleSetQuery = query => {
@@ -64,7 +63,6 @@ export const App = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  console.log(error);
   return (
     <div>
       {error === 'Network Error' && <ErrorMessage message={error} />}

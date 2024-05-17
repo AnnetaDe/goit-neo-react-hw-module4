@@ -1,15 +1,8 @@
 import Modal from 'react-modal';
 Modal.setAppElement('#root');
-import s from './Modal.module.css';
+import s from './ImageModal.module.css';
 
 const ModalWindow = ({ isOpen, imageUrl, closeModal }) => {
-  const handleKeyDown = e => {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  };
-  document.addEventListener('keydown', handleKeyDown);
-
   return (
     <Modal
       className={s.modal}
